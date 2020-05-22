@@ -21,7 +21,8 @@ function initActuators(actuators) {
     }
 
     const defaults = ['health', 'info', 'env'];
-    const excluded = ['caches', 'heapdump', "self", "shutdown"];
+    const excluded = ['caches', 'heapdump', "loggers-name",
+        "self", "shutdown", "health-path"];
     let defaultOption = false;
     Object.keys(links).sort().forEach(function(key) {
         const actuator = links[key];

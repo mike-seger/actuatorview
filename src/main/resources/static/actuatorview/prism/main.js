@@ -7,8 +7,6 @@ let maxLevel = 1;
 function css(url, callback) {
      const head = document.getElementsByTagName('head')[0];
      const cssNode = document.createElement('link');
-//     if(!callback)
-//        callback = function() {Prism.highlightAll();}
      cssNode.type = 'text/css';
      cssNode.rel = 'stylesheet';
      cssNode.href = url;
@@ -92,7 +90,6 @@ function levelSet(level) {
     let selectionContainer = getSelectionParentElement();
     var root=jsonCode;
     if(selectionContainer) {
-        console.log("selectionContainer");
         const ancestors = getAncestors(selectionContainer, '.collapsible');
         if(ancestors.length > 0) {
             root = ancestors[0];
@@ -108,7 +105,6 @@ function levelSet(level) {
     });
     levelInput.max = maxLevel;
     levelInput.value = level;
-    console.log("Level: "+level);
 }
 
 function toggleAll() {
@@ -121,7 +117,19 @@ function toggleAll() {
     }
 }
 
-function markCollapsible() {
+function getInitialLevel(uri, defaultLevel) {
+    var initialLevel = defaultLevel;
+    if(uri.endsWith('threaddump')) initialLevel = 2;
+    else if(uri.endsWith('loggers')) initialLevel = 1;
+    else if(uri.endsWith('httptrace')) initialLevel = 2;
+    else if(uri.endsWith('configprops')) initialLevel = 3;
+    else if(uri.endsWith('conditions')) initialLevel = 3;
+    else if(uri.endsWith('beans')) initialLevel = 3;
+    else if(uri.endsWith('mappings')) initialLevel = 4;
+    return initialLevel;
+}
+
+function markCollapsible(uri) {
     jsonCode.querySelectorAll('.block i').forEach(function (block) {
         block.parentElement.classList.add('collapsible');
     });
@@ -135,7 +143,7 @@ function markCollapsible() {
         }
     });
 
-    levelSet(maxLevel);
+    levelSet(getInitialLevel(uri, maxLevel));
 }
 
 function highLight() {
@@ -156,7 +164,7 @@ function highLight() {
             jsonCode.innerHTML = jsonString;
             Prism.highlightAll();
             levelInput.style.visibility  = "visible";
-            markCollapsible();
+            markCollapsible(uri);
         })
         .catch((err) => {
             console.log(err);
