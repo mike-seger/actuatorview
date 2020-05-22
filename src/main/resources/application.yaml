@@ -1,0 +1,32 @@
+spring.resources:
+  static-locations:
+    - file:src/main/resources/static/
+    - classpath:/static/
+
+management:
+  endpoints:
+    configprops.enabled: true
+    beans.enabled: true
+    shutdown.enabled: true
+    enabled-by-default: true
+    sensitive: false
+    enabled: true
+    web.exposure.include: "*"
+
+  endpoint:
+    configprops.enabled: true
+    beans.enabled: true
+    shutdown.enabled: true
+    health:
+      show-details: always
+
+spring.main.banner-mode: off
+
+logging:
+  file: appviewer.log
+  level:
+    org:
+      springframework:
+        web:
+          filter:
+            CommonsRequestLoggingFilter: debug

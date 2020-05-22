@@ -1,0 +1,84 @@
+code .block {
+ position: relative;
+}
+
+code i.caret {
+  position: absolute;
+  font-style: normal;
+  cursor: pointer;
+
+  height: 6px;
+  top: -2px;
+  left: -13px;
+  color: rgba(200, 200, 200, 0.9);
+  background-color: rgba(0, 0, 0, 0);
+}
+
+
+code i.caret:before {
+  /** You may have to change this: It only works when using font awesome */
+  content: '\25B6';
+}
+
+code .block-wrapper {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  vertical-align: top;
+
+  /** You may have to modify this */
+  max-height: 24px;
+  max-width: 45px;
+  color: #ccc;
+}
+
+code .block-wrapper > * {
+  opacity: 0;
+}
+
+code .block-wrapper:before {
+  content: '...';
+  top: -2px;
+  position: absolute;
+  left: 3px;
+}
+
+code .block-wrapper:after {
+  top: 0px;
+  position: absolute;
+  right: 0;
+}
+
+code .block-keyed-object > .block-wrapper:after,
+code .block-object > .block-wrapper:after {
+  content: '}';
+}
+
+code .block-keyed-array > .block-wrapper:after,
+code .block-array > .block-wrapper:after {
+  content: ']';
+}
+
+code .block.open > .block-wrapper {
+  display: initial;
+}
+
+code .block.open > .block-wrapper > * {
+  opacity: 1;
+}
+
+code .block.open > .block-wrapper:before,
+code .block.open > .block-wrapper:after {
+  display: none;
+}
+
+code .block.open > i.caret:before {
+  content: '\25BC';
+  left: -22px;
+  top: 7px;
+}
+
+code i.caret:before::selection {
+  color: rgba(200, 200, 200, 0);
+  background-color: rgba(0, 0, 0, 0);
+}
