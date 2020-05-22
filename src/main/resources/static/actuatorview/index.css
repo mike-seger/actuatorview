@@ -35,8 +35,7 @@ label {
     width: 260px
 }
 
-#varInput::-webkit-input-placeholder
- {
+#varInput::-webkit-input-placeholder {
   color: white;
 }
 

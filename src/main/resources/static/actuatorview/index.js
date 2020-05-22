@@ -35,7 +35,7 @@ function initActuators(actuators) {
             actuatorSelector.appendChild(option);
         }
     });
-    console.log(text);
+    //console.log(text);
     actuatorSelector.value = defaultOption.value;
     actuatorChanged();
 }
@@ -51,10 +51,10 @@ function setEnvPropsDataList() {
     propertyNames.sort(function (a, b) {
         return a.toLowerCase().localeCompare(b.toLowerCase());
     });
-    console.log(propertyNames);
+    //console.log(propertyNames);
     varDataList.innerHTML = '';
     propertyNames.forEach(function (item, index) {
-      console.log(item, index);
+      //console.log(item, index);
       varDataList.appendChild(new Option("", item));
     });
 
@@ -66,12 +66,12 @@ function setMetricsNamesDataList() {
     const namesList = data.names;
     varDataList.innerHTML = '';
     namesList.sort().forEach(function (item, index) {
-      console.log(item, index);
+      //console.log(item, index);
       varDataList.appendChild(new Option("", item));
     });
 
     varValidList = namesList;
-    console.log(namesList);
+    //console.log(namesList);
 }
 
 function loadContent() {
@@ -105,6 +105,9 @@ function changeInput(uri) {
         varArea.style.visibility  = "visible";
         setEnvPropsDataList();
     } else if(uri.includes("/metrics/{requiredMetricName}")) {
+        varArea.style.visibility  = "visible";
+        setMetricsNamesDataList();
+    } else if(uri.includes("/health/{path}")) {
         varArea.style.visibility  = "visible";
         setMetricsNamesDataList();
     } else {
@@ -141,7 +144,7 @@ actuatorSelector.addEventListener("change", function() {
 //    }
 //});
 varInput.addEventListener("change",function () {
-    if(varValidList.includes(varInput.value)) {
+    if(varValidList.length==0 || varValidList.includes(varInput.value)) {
         varInput.placeholder = varInput.value;
         varInput.uri = varInput.value;
         varInput.value="";

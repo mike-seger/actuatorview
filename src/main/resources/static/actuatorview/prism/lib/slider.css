@@ -1,0 +1,26 @@
+.slider {
+  -webkit-appearance: none;
+  width: 100px;
+  height: 1px;
+  border-radius: 0px;
+  background: rgb(230,230,230) !important;
+  outline: none;
+  opacity: 0.9;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: rgb(150,203,254) !important;
+  cursor: pointer;
+}
+

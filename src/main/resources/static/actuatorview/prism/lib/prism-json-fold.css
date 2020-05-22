@@ -7,17 +7,17 @@ code i.caret {
   font-style: normal;
   cursor: pointer;
 
-  /** You may have to change this */
-  width: 10px;
-  height: 10px;
-  top: -3px;
-  left: -12px;
-  color: #ccc;
+  height: 6px;
+  top: -2px;
+  left: -13px;
+  color: rgba(200, 200, 200, 0.9);
+  background-color: rgba(0, 0, 0, 0);
 }
+
 
 code i.caret:before {
   /** You may have to change this: It only works when using font awesome */
-  content: '\25B8';
+  content: '\25B6';
 }
 
 code .block-wrapper {
@@ -74,4 +74,11 @@ code .block.open > .block-wrapper:after {
 
 code .block.open > i.caret:before {
   content: '\25BC';
+  left: -22px;
+  top: 7px;
+}
+
+code i.caret:before::selection {
+  color: rgba(200, 200, 200, 0);
+  background-color: rgba(0, 0, 0, 0);
 }

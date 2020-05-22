@@ -16,3 +16,19 @@ select, input, button {
   -ms-user-select: none; /* IE 10+ and Edge */
   user-select: none; /* Standard syntax */
 }
+
+.toolbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin-top: 0.1em;
+    margin-right: 1em;
+    z-index:100;
+    /*
+    display: inline-block;
+    vertical-align: top;
+    position:absolute;
+    top: 5px;
+    z-index:100;
+    */
+}
