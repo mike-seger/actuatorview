@@ -1,0 +1,57 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body, select, input, button, label {
+    font-size: 12px;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    background: #282a36;
+    background: rgb(35,35,35);
+    color: white;
+}
+
+label {
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+
+#content {
+    width: 100%;
+    height: calc(100vh - 30px);
+    position: absolute;
+    top: 30px;
+    bottom: 0;
+    border: 0;
+}
+
+#varInput {
+    border: 1px solid !important;
+    border-color: rgb(118, 118, 118) !important;
+    margin: 0;
+    margin-bottom: 4px !important;
+    width: 260px
+}
+
+#varInput::-webkit-input-placeholder
+ {
+  color: white;
+}
+
+#varInput:-ms-input-placeholder {
+  color: white;
+}
+
+#varInput::placeholder {
+  color: white;
+}
+
+#input {
+    padding: 5px;
+}
+
+#envPropInput {
+    xxdisplay: none;
+}

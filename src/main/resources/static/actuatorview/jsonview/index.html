@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="jsonview.css">
+  <script src="jsonview.js"></script>
+</head>
+<body>
+  <div class="root"></div>
+  <script type="text/javascript">
+    var urlParams = new URLSearchParams(window.location.search);
+    fetch(urlParams.get('uri'))
+    .then((res)=> {
+      return res.text();
+    })
+    .then((data) => {
+      jsonView.format(data, '.root');
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="lib/prism-toolbar.css" rel="stylesheet" />
+    <link href="index.css" rel="stylesheet" />
+</head>
+<body style="background-color: black;" >
+    <label for="">Theme&nbsp;</label><select id="theme"></select>
+    <button id="toggle"> All +/- </button>
+    <pre><code id="jsonCode" class="language-json"></code></pre>
+    <script>
+        window.Prism = window.Prism || {};
+        window.Prism.manual = true;
+    </script>
+    <script src="index.js"></script>
+    <script src="lib/stringify.js"></script>
+    <script src="lib/prism.js"></script>
+    <script type="text/javascript" src="lib/prism-json-fold.min.js"></script>
+    <script type="text/javascript">
+        const urlParams = new URLSearchParams(window.location.search);
+        const uri = urlParams.get('uri');
+        if('-' === uri) {
+            jsonCode.innerHTML="";
+            Prism.highlightAll();
+        } else {
+            const jsonCode = document.getElementById("jsonCode");
+            fetch(uri)
+            .then((res)=> {
+                return res.json();
+            })
+            .then((data) => {
+                var jsonString = stringify(data, {maxLength: 80, indent: 2});
+                jsonCode.innerHTML = jsonString;
+                Prism.highlightAll();
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+html, body, body *,
+.toolbar-item, .code-toolbar,
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #282a36 !important;
+	color: white;
+}
+
+body {
+    font-size: 12px;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+select, input, button {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10+ and Edge */
+  user-select: none; /* Standard syntax */
+}
