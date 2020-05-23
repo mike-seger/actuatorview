@@ -1,0 +1,42 @@
+.autocomplete {
+    margin-top: 3px;
+    border: 1px solid rgb(85,85,85);
+    border-radius: 4px;
+    color: white;
+    z-index: 1000;
+    font-size: 12px;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    overflow: auto;
+    background-color: rgb(55,55,55);
+    overflow-wrap: break-word;
+    max-height: 350px !important;
+}
+
+.autocomplete * {
+    font: inherit;
+}
+
+.autocomplete > div {
+    padding: 2px;
+}
+
+.autocomplete > div:hover:not(.group),
+.autocomplete > div.selected{
+    background: rgb(0,87,217);
+}
+
+.autocomplete > div:hover:not(.group),
+.autocomplete > div.selected{
+    background: rgb(0,87,217);
+}
+
+.autocomplete > div:hover:not(.group):not(.selected) {
+    filter: grayscale(60%);
+    opacity: 0.7;
+}
+
+
+
+
+
+

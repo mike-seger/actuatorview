@@ -57,17 +57,25 @@ function isDescendant(parent, child) {
 }
 
 function getSelectionParentElement() {
-    var parentEl = null, sel;
+    var parentEl = null, text="", sel;
     if (window.getSelection) {
         sel = window.getSelection();
         if (sel.rangeCount) {
-            parentEl = sel.getRangeAt(0).commonAncestorContainer;
+            text = sel.getRangeAt(0);
+            console.log("wrange="+text);
+            parentEl = text.commonAncestorContainer;
             if (parentEl.nodeType != 1) {
                 parentEl = parentEl.parentNode;
             }
         }
     } else if ( (sel = document.selection) && sel.type != "Control") {
-        parentEl = sel.createRange().parentElement();
+        text = sel.createRange();
+        console.log("drange="+text);
+        parentEl = text.parentElement();
+    }
+
+    if(!(text+"").match(/\w+/)) {
+        return null;
     }
     return parentEl;
 }
@@ -123,7 +131,7 @@ function getInitialLevel(uri, defaultLevel) {
 
 function markOptional(uri) {
     jsonCode.querySelectorAll('span.token.property').forEach(function (element) {
-        console.log(element.innerHTML);
+        //console.log(element.innerHTML);
         var text = element.innerHTML;
         if('"value"' === text || '"name"' === text) {
             element.classList.add('optional');
@@ -137,7 +145,17 @@ function markOptional(uri) {
         if(text.includes('"')) {
             element.innerHTML = text.replace(/\"/g,'');
         }
+        if(text.length > 200) {
+            element.classList.add('huge');
+        }
     });
+
+    if(uri.match(".*env.*summary.*")) {
+        jsonCode.querySelectorAll('span.token.property').forEach(function (element) {
+            element.classList.add('summary');
+        });
+    }
+
 }
 
 function markCollapsible(uri) {
@@ -177,6 +195,7 @@ function highLight() {
             levelInput.style.visibility  = "visible";
             markCollapsible(uri);
             markOptional(uri);
+
             //addJsonViewer(jsonCode, jsonString);
         })
         .catch((err) => {

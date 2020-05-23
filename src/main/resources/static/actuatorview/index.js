@@ -1,16 +1,15 @@
 "use strict";
 
+import {attachAutoComplete} from './lib/autocomplete-util.js';
+
 const actuatorRoot = "../actuator";
 const actuatorSelector = document.getElementById('actuatorSelector');
 const varArea = document.getElementById('varArea');
 const varInput = document.getElementById('varInput');
-const varDataList = document.getElementById('varDataList');
 const contentFrame = document.getElementById('content');
 
-var varListData = null;
 var envPropData = null;
 var metricsData = null;
-var varValidList = [];
 
 function initActuators(actuators) {
     let text = '';
@@ -53,26 +52,13 @@ function setEnvPropsDataList() {
         return a.toLowerCase().localeCompare(b.toLowerCase());
     });
     //console.log(propertyNames);
-    varDataList.innerHTML = '';
-    propertyNames.forEach(function (item, index) {
-      //console.log(item, index);
-      varDataList.appendChild(new Option("", item));
-    });
-
-    varValidList = propertyNames;
+    attachAutoComplete(varInput, propertyNames);
 }
 
 function setMetricsNamesDataList() {
     const data = metricsData;
-    const namesList = data.names;
-    varDataList.innerHTML = '';
-    namesList.sort().forEach(function (item, index) {
-      //console.log(item, index);
-      varDataList.appendChild(new Option("", item));
-    });
-
-    varValidList = namesList;
-    //console.log(namesList);
+    const namesList = metricsData.names.sort();
+    attachAutoComplete(varInput, namesList);
 }
 
 function loadContent() {
@@ -113,8 +99,8 @@ function changeInput(uri) {
         setMetricsNamesDataList();
     } else {
         varArea.style.visibility  = "hidden";
+        varInput.uri = null;
     }
-    varInput.value = "";
 }
 
 function actuatorChanged() {
@@ -137,20 +123,14 @@ function actuatorChanged() {
 actuatorSelector.addEventListener("change", function() {
     varInput.uri = null;
     actuatorChanged();
-    varInput.placeholder = "Search value...";
+    //varInput.placeholder = "Search value...";
 });
-//varInput.addEventListener("keyup", function(event) {
-//    if (event.key === "Enter") {
-//        actuatorChanged();
-//    }
-//});
-varInput.addEventListener("change",function () {
-    if(varValidList.length==0 || varValidList.includes(varInput.value)) {
-        varInput.placeholder = varInput.value;
-        varInput.uri = varInput.value;
-        varInput.value="";
-        actuatorChanged();
-    }
+
+
+varInput.addEventListener("change", function () {
+    console.log("Change");
+    varInput.uri = varInput._value;
+    actuatorChanged();
 });
 
 loadContent();
