@@ -9,10 +9,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.core.env.EnumerablePropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.core.env.MutablePropertySources;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
@@ -52,6 +50,17 @@ public class EnvironmentSummaryActuator {
             .flatMap(Arrays::<String>stream).collect(Collectors.toMap(
                 propName -> propName, propName -> environment.getProperty(propName)+"",
                     (a, b) -> b, TreeMap::new));
+    }
+
+    private String getPropertySafely(Environment environment, String name) {
+        String value;
+        try {
+            value = environment.getProperty(name);
+        } catch(Exception e) {
+            value = String.format("Unable to resolve property %s. Reason: %s", name, e.getMessage());
+            e.printStackTrace();
+        }
+        return value;
     }
 
     public static class EnvironmentSummaryInfo {
