@@ -71,7 +71,7 @@ function stringify(passedObj, options) {
       } else {
         start = "{";
         end = "}";
-        keys = Object.keys(obj);
+        keys = Object.keys(obj).sort();
         length = keys.length;
         for (; index < length; index++) {
           key = keys[index];

@@ -6,9 +6,44 @@ pre[class*="language-"] {
 	color: white;
 }
 
+body, html {
+    margin-top: 0;
+    padding-top: 0;
+}
+
 body {
+    padding-top: 3;
+}
+
+pre[class*="language-"] {
+	margin:  0;
+	padding: 0;
+	margin-top: -1.4em;
+}
+
+span.token.punctuation, span.token.operator {
+    visibility: hidden;
+}
+
+span.block-wrapper::after,
+span.optional {
+    display: none;
+}
+
+span.token.string {
+    white-space: pre-line;
+    overflow-wrap: break-word;
+    display: inline-block;
+    max-width: calc(100% - 17ch);
+}
+
+html, body {
     font-size: 12px;
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+html, body, pre {
+    overflow-x: hidden !important;
 }
 
 select, input, button {

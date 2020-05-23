@@ -4,20 +4,21 @@
     <link href="lib/prism-atom-dark-theme.css" rel="stylesheet" />
     <link href="index.css" rel="stylesheet" />
     <link href="lib/slider.css" rel="stylesheet" />
+
 </head>
 <body>
-    <div class="toolbar">
-    <input class="slider" id="level-input" type="range"
-        min="0" max="1" value="1" style="visibility: hidden;" >
-    </div>
     <pre><code id="jsonCode" class="language-json"></code></pre>
+    <div class="toolbar">
+        <input class="slider" id="level-input" type="range"
+            min="0" max="1" value="1" style="visibility: hidden;" >
+    </div>
     <script>
         window.Prism = window.Prism || {};
         window.Prism.manual = true;
     </script>
     <script src="lib/stringify.js"></script>
     <script src="lib/prism.js"></script>
-    <script type="text/javascript" src="lib/prism-json-fold.min.js"></script>
+    <script type="text/javascript" src="lib/prism-json-fold.js"></script>
     <script src="main.js"></script>
 </body>
 </html>

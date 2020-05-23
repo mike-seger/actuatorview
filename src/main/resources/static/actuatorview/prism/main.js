@@ -72,14 +72,6 @@ function getSelectionParentElement() {
     return parentEl;
 }
 
-function levelUp() {
-    levelSet(levelInput.value+1);
-}
-
-function levelDown() {
-    levelSet(levelInput.value-1);
-}
-
 function levelSet(level) {
     if(level < 0) {
         level = 0;
@@ -129,6 +121,25 @@ function getInitialLevel(uri, defaultLevel) {
     return initialLevel;
 }
 
+function markOptional(uri) {
+    jsonCode.querySelectorAll('span.token.property').forEach(function (element) {
+        console.log(element.innerHTML);
+        var text = element.innerHTML;
+        if('"value"' === text || '"name"' === text) {
+            element.classList.add('optional');
+        } else if(text.includes('"')) {
+            element.innerHTML = text.replace(/\"/g,'');
+        }
+    });
+
+    jsonCode.querySelectorAll('span.token.string').forEach(function (element) {
+        var text = element.innerHTML;
+        if(text.includes('"')) {
+            element.innerHTML = text.replace(/\"/g,'');
+        }
+    });
+}
+
 function markCollapsible(uri) {
     jsonCode.querySelectorAll('.block i').forEach(function (block) {
         block.parentElement.classList.add('collapsible');
@@ -165,6 +176,8 @@ function highLight() {
             Prism.highlightAll();
             levelInput.style.visibility  = "visible";
             markCollapsible(uri);
+            markOptional(uri);
+            //addJsonViewer(jsonCode, jsonString);
         })
         .catch((err) => {
             console.log(err);
