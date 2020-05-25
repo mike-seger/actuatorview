@@ -23,7 +23,10 @@ management:
 spring.main.banner-mode: off
 
 logging:
-  file: appviewer.log
+  file:
+    path: ${java.io.tmpdir:/tmp}/appviewer.log
+    max-size: 30MB
+    max-history: 5
   level:
     org:
       springframework:

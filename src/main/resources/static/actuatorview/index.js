@@ -11,16 +11,17 @@ const contentFrame = document.getElementById('content');
 var envPropData = null;
 var metricsData = null;
 
+function containsToken(string, list) {
+    return new RegExp(list.join('|')).test(string)
+}
+
 function initActuators(actuators) {
     let text = '';
     let links = actuators._links;
     let selectedOption = null;
-    function containsToken(string, list) {
-        return new RegExp(list.join('|')).test(string)
-    }
 
     const defaults = ['health', 'info', 'env'];
-    const excluded = ['caches', 'heapdump', "loggers-name",
+    const excluded = ['caches', 'metrics$', 'heapdump', "loggers-name",
         "self", "shutdown", "health-path"];
     let defaultOption = false;
     Object.keys(links).sort().forEach(function(key) {
@@ -115,8 +116,14 @@ function actuatorChanged() {
     if(name != null && value.length == 0) {
         contentFrame.src = 'prism/index.html?uri=-';
     } else {
-        const realUri=actuatorSelector.value.replace("{"+name+"}", value);
-        contentFrame.src = 'prism/index.html?uri='+encodeURI(realUri);
+        var actName = uri.replace(/.*[\/]/, "");
+        const textOnly = ['logfile', 'prometheus', 'threaddump', 'env-plain'];
+        if(containsToken(actName, textOnly)) {
+            contentFrame.src = 'plain/index.html?uri='+encodeURI(uri);
+        } else {
+            const realUri=actuatorSelector.value.replace("{"+name+"}", value);
+            contentFrame.src = 'prism/index.html?uri='+encodeURI(realUri);
+        }
     }
 }
 

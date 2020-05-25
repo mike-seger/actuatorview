@@ -9,8 +9,13 @@ import org.springframework.context.event.EventListener;
 import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.core.env.EnumerablePropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.Response;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
@@ -18,7 +23,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Component
-@Endpoint(id="env-summary")
+@Endpoint(id="env-plain")
 public class EnvironmentSummaryActuator {
     final private Environment environment;
 
@@ -28,9 +33,9 @@ public class EnvironmentSummaryActuator {
         this.environment = environment;
     }
 
-    @ReadOperation
-    public EnvironmentSummaryInfo getEnvironmentSummaryInfo() {
-        return new EnvironmentSummaryInfo(cachedProperties);
+    @ReadOperation(produces = MediaType.TEXT_PLAIN_VALUE)
+    public String getEnvironmentSummaryInfo() {
+        return plainProperties(cachedProperties);
     }
 
     @EventListener({ApplicationReadyEvent.class, ContextRefreshedEvent.class})
@@ -41,14 +46,20 @@ public class EnvironmentSummaryActuator {
         cachedProperties=getAllProperties();
     }
 
+    private String plainProperties(Map<String, String> properties) {
+        return properties.entrySet().stream()
+            .map(e -> String.join("=", e.getKey(), e.getValue()))
+            .collect(Collectors.joining("\n"));
+    }
+
     private Map<String, String> getAllProperties() {
         //noinspection rawtypes
         return StreamSupport.stream(((AbstractEnvironment) environment)
             .getPropertySources().spliterator(), false)
             .filter(ps -> ps instanceof EnumerablePropertySource)
             .map(ps -> ((EnumerablePropertySource) ps).getPropertyNames())
-            .flatMap(Arrays::<String>stream).collect(Collectors.toMap(
-                propName -> propName, propName -> environment.getProperty(propName)+"",
+            .flatMap(Arrays::stream).collect(Collectors.toMap(
+                propName -> propName, propName -> getPropertySafely(environment, propName),
                     (a, b) -> b, TreeMap::new));
     }
 

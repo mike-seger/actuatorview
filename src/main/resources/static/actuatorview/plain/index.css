@@ -1,0 +1,48 @@
+div#plaintext {
+    display: block;
+    width: calc(100% -20px);
+    font: 12px monospace;
+    xxmargin-top: -9px;
+}
+
+#plaintext > pre {
+    margin: 0;
+    display: block;
+    color: #96CBFE;
+    padding-top: 6px;
+    white-space: pre-line;
+    overflow-wrap: break-word;
+}
+
+#plaintext > pre.seq {
+    padding-top: 0;
+}
+
+#plaintext > pre.com {
+    color: #A8FF60;
+    margin-bottom: -6px;
+}
+
+#plaintext > div {
+    display: block;
+}
+
+#plaintext > div > span.value,
+#plaintext > div > span.name,
+#plaintext > div > span.delim {
+    display: block-inline;
+    padding: 0;
+}
+
+#plaintext > div > span.value {
+    color: #A8FF60;
+}
+
+#plaintext > div > span.delim {
+    color: rgb(154, 127, 213);
+    margin: 0 5px 0 5px;
+}
+
+#plaintext > div > span.name {
+    color: #96CBFE;
+}
